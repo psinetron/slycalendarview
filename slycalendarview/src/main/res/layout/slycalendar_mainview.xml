@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:background="@color/slycalendar_defBackgroundColor"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/slycalendar_defHeaderColor"
+        android:orientation="vertical"
+        android:paddingLeft="27dp"
+        android:paddingTop="21dp"
+        android:paddingRight="27dp"
+        android:paddingBottom="15dp">
+
+        <TextView
+            android:id="@+id/txtYear"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:alpha="0.5"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/slycalendar_defHeaderTextColor"
+            android:textSize="14sp"
+            android:layout_marginBottom="10dp"
+            tools:text="2018"
+            />
+
+        <TextView
+            android:id="@+id/txtSelectedPeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/slycalendar_defHeaderTextColor"
+            android:textSize="22sp"
+            android:layout_marginBottom="10dp"
+            tools:text="FRI, 13 — SUN, 15 MAY"
+            android:singleLine="true"
+            android:maxLines="1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="vertical"
+        >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:layout_gravity="end"
+        >
+
+        <TextView
+            android:id="@+id/txtCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="@string/slycalendar_cancel"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textColor="@color/slycalendar_defTextColor"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <TextView
+            android:id="@+id/txtSave"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="@string/slycalendar_save"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textColor="@color/slycalendar_defTextColor"
+            android:fontFamily="sans-serif-medium"
+
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

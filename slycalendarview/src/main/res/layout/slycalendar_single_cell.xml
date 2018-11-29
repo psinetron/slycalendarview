@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cellView"
+    android:layout_width="match_parent"
+    android:layout_height="42dp"
+    android:foreground="?android:attr/actionBarItemBackground"
+    android:clickable="true"
+    >
+    <FrameLayout
+        android:id="@+id/frameSelected"
+        android:layout_width="match_parent"
+        android:clickable="false"
+        android:layout_height="match_parent"/>
+    
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/slycalendar_defTextColor"
+        android:layout_gravity="center"
+        android:clickable="false"
+        />
+    
+</FrameLayout>
