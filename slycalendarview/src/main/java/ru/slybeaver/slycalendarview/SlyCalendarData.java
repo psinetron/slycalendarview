@@ -1,7 +1,5 @@
 package ru.slybeaver.slycalendarview;
 
-import android.graphics.Color;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -36,9 +34,7 @@ public class SlyCalendarData {
     }
 
     public Date getSelectedStartDate() {
-
-        return new Date(System.currentTimeMillis() -  5*60*60*24*1000);
-        //return selectedStartDate;
+        return selectedStartDate;
     }
 
     public void setSelectedStartDate(Date selectedStartDate) {
@@ -46,8 +42,7 @@ public class SlyCalendarData {
     }
 
     public Date getSelectedEndDate() {
-        return new Date(System.currentTimeMillis() + 5*60*60*24*1000);
-//        return selectedEndDate;
+        return selectedEndDate;
     }
 
     public void setSelectedEndDate(Date selectedEndDate) {

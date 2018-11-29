@@ -14,15 +14,17 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import ru.slybeaver.slycalendarview.adapters.GridAdapter;
+import ru.slybeaver.slycalendarview.listeners.DateSelectListener;
 
 /**
  * Created by psinetron on 29/11/2018.
  * http://slybeaver.ru
  */
-public class SlyCalendarView extends FrameLayout {
+public class SlyCalendarView extends FrameLayout implements DateSelectListener {
 
     private SlyCalendarData slyCalendarData = new SlyCalendarData();
     private View mainView = null;
@@ -46,12 +48,12 @@ public class SlyCalendarView extends FrameLayout {
         inflate(getContext(), R.layout.slycalendar_mainview, this);
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SlyCalendarView, defStyle, 0);
 
-        slyCalendarData.setBackgroundColor(typedArray.getColor(R.styleable.SlyCalendarView_backgroundColor, ContextCompat.getColor(getContext(),R.color.slycalendar_defBackgroundColor)));
-        slyCalendarData.setHeaderColor(typedArray.getColor(R.styleable.SlyCalendarView_headerColor, ContextCompat.getColor(getContext(),R.color.slycalendar_defHeaderColor)));
-        slyCalendarData.setHeaderTextColor(typedArray.getColor(R.styleable.SlyCalendarView_headerTextColor, ContextCompat.getColor(getContext(),R.color.slycalendar_defHeaderTextColor)));
-        slyCalendarData.setTextColor(typedArray.getColor(R.styleable.SlyCalendarView_textColor, ContextCompat.getColor(getContext(),R.color.slycalendar_defTextColor)));
-        slyCalendarData.setSelectedColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedColor, ContextCompat.getColor(getContext(),R.color.slycalendar_defSelectedColor)));
-        slyCalendarData.setSelectedTextColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedTextColor, ContextCompat.getColor(getContext(),R.color.slycalendar_defSelectedTextColor)));
+        slyCalendarData.setBackgroundColor(typedArray.getColor(R.styleable.SlyCalendarView_backgroundColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defBackgroundColor)));
+        slyCalendarData.setHeaderColor(typedArray.getColor(R.styleable.SlyCalendarView_headerColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defHeaderColor)));
+        slyCalendarData.setHeaderTextColor(typedArray.getColor(R.styleable.SlyCalendarView_headerTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defHeaderTextColor)));
+        slyCalendarData.setTextColor(typedArray.getColor(R.styleable.SlyCalendarView_textColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defTextColor)));
+        slyCalendarData.setSelectedColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedColor)));
+        slyCalendarData.setSelectedTextColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedTextColor)));
 
         typedArray.recycle();
 
@@ -65,13 +67,13 @@ public class SlyCalendarView extends FrameLayout {
 
         Calendar calendarStart = Calendar.getInstance();
         Calendar calendarEnd = null;
-        if (slyCalendarData.getSelectedStartDate()!=null) {
+        if (slyCalendarData.getSelectedStartDate() != null) {
             calendarStart.setTime(slyCalendarData.getSelectedStartDate());
         } else {
             calendarStart.setTime(slyCalendarData.getShowDate());
         }
 
-        if (slyCalendarData.getSelectedEndDate()!=null) {
+        if (slyCalendarData.getSelectedEndDate() != null) {
             calendarEnd = Calendar.getInstance();
             calendarEnd.setTime(slyCalendarData.getSelectedEndDate());
         }
@@ -79,9 +81,9 @@ public class SlyCalendarView extends FrameLayout {
         ((TextView) findViewById(R.id.txtYear)).setText(String.valueOf(calendarStart.get(Calendar.YEAR)));
 
 
-        if (calendarEnd==null ) {
+        if (calendarEnd == null) {
             ((TextView) findViewById(R.id.txtSelectedPeriod)).setText(
-                    new SimpleDateFormat("EE, dd MMM", Locale.getDefault()).format(calendarStart.getTime())
+                    new SimpleDateFormat("EE, dd MMMM", Locale.getDefault()).format(calendarStart.getTime())
             );
         } else {
             if (calendarStart.get(Calendar.MONTH) == calendarEnd.get(Calendar.MONTH)) {
@@ -95,7 +97,7 @@ public class SlyCalendarView extends FrameLayout {
             }
         }
 
-        ((TextView) findViewById(R.id.txtSelectedMonth)).setText( new SimpleDateFormat("LLLL", Locale.getDefault()).format(slyCalendarData.getShowDate()));
+        ((TextView) findViewById(R.id.txtSelectedMonth)).setText(new SimpleDateFormat("LLLL yyyy", Locale.getDefault()).format(slyCalendarData.getShowDate()));
 
         findViewById(R.id.btnMonthPrev).setOnClickListener(new OnClickListener() {
             @Override
@@ -128,10 +130,45 @@ public class SlyCalendarView extends FrameLayout {
         ((TextView) findViewById(R.id.day6)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_sat) : getContext().getString(R.string.slycalendar_fri));
         ((TextView) findViewById(R.id.day7)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_sun) : getContext().getString(R.string.slycalendar_sat));
 
-        GridAdapter adapter = new GridAdapter(getContext(), slyCalendarData, null);
+        GridAdapter adapter = new GridAdapter(getContext(), slyCalendarData, this);
         ((GridView) findViewById(R.id.calendarGrid)).setAdapter(adapter);
-
-
     }
 
+    @Override
+    public void dateSelect(Date selectedDate) {
+        if (slyCalendarData.getSelectedStartDate()==null) {
+            slyCalendarData.setSelectedStartDate(selectedDate);
+            showCalendar();
+            return;
+        }
+        if (slyCalendarData.getSelectedEndDate() == null) {
+            if (selectedDate.getTime() < slyCalendarData.getSelectedStartDate().getTime()) {
+                slyCalendarData.setSelectedEndDate(slyCalendarData.getSelectedStartDate());
+                slyCalendarData.setSelectedStartDate(selectedDate);
+                showCalendar();
+                return;
+            } else if (selectedDate.getTime() == slyCalendarData.getSelectedStartDate().getTime()) {
+                slyCalendarData.setSelectedEndDate(null);
+                slyCalendarData.setSelectedStartDate(selectedDate);
+                showCalendar();
+                return;
+            } else if (selectedDate.getTime() > slyCalendarData.getSelectedStartDate().getTime()) {
+                slyCalendarData.setSelectedEndDate(selectedDate);
+                showCalendar();
+                return;
+            }
+        }
+        if (slyCalendarData.getSelectedEndDate() != null) {
+            slyCalendarData.setSelectedEndDate(null);
+            slyCalendarData.setSelectedStartDate(selectedDate);
+            showCalendar();
+        }
+    }
+
+    @Override
+    public void dateLongSelect(Date selectedDate) {
+        slyCalendarData.setSelectedEndDate(null);
+        slyCalendarData.setSelectedStartDate(selectedDate);
+        showCalendar();
+    }
 }
