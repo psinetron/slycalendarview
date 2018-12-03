@@ -13,6 +13,7 @@ public class SlyCalendarData {
     private Date selectedStartDate = null; // first selected date
     private Date selectedEndDate = null; // ended selected date
     private boolean firstMonday = true; // is first monday
+    private boolean single = true;
 
     private Integer backgroundColor = null;
     private Integer headerColor = null;
@@ -24,7 +25,11 @@ public class SlyCalendarData {
 
     public Date getShowDate() {
         if (showDate == null) {
-            showDate = Calendar.getInstance().getTime();
+            if (selectedStartDate!=null) {
+                showDate = (Date) selectedStartDate.clone();
+            } else {
+                showDate = Calendar.getInstance().getTime();
+            }
         }
         return showDate;
     }
@@ -103,5 +108,13 @@ public class SlyCalendarData {
 
     public void setSelectedTextColor(Integer selectedTextColor) {
         this.selectedTextColor = selectedTextColor;
+    }
+
+    public boolean isSingle() {
+        return single;
+    }
+
+    public void setSingle(boolean single) {
+        this.single = single;
     }
 }

@@ -103,6 +103,8 @@ public class GridAdapter extends ArrayAdapter {
         });
 
 
+        view.findViewById(R.id.cellView).setBackgroundColor(calendarData.getBackgroundColor());
+
         if (calendarStart != null && calendarEnd != null) {
             if (dateCal.get(Calendar.DAY_OF_YEAR) == calendarStart.get(Calendar.DAY_OF_YEAR) && dateCal.get(Calendar.YEAR) == calendarStart.get(Calendar.YEAR)) {
                 LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.slycalendar_start_day);
