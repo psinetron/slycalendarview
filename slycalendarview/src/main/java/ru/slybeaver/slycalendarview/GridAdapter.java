@@ -1,4 +1,4 @@
-package ru.slybeaver.slycalendarview.adapters;
+package ru.slybeaver.slycalendarview;
 
 import android.content.Context;
 import android.graphics.Typeface;

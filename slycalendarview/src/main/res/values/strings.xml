@@ -1,24 +1,15 @@
 <resources>
-    <string name="app_name">SlyCalendarView</string>
+    <string name="app_name" translatable="false">SlyCalendarView</string>
+
+    <string name="slycalendar_singledate" translatable="false">EE, dd MMMM</string>
+    <string name="slycalendar_short" translatable="false">EE, dd</string>
+    <string name="slycalendar_short_month" translatable="false">EE, dd MMM</string>
+    <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
 
     <string name="slycalendar_cancel">Cancel</string>
     <string name="slycalendar_save">Save</string>
     <string name="slycalendar_next">Next</string>
     <string name="slycalendar_prev">Prev</string>
-
-    <string name="slycalendar_singledate">EE, dd MMMM</string>
-    <string name="slycalendar_short">EE, dd</string>
-    <string name="slycalendar_short_month">EE, dd MMM</string>
-    <string name="slycalendar_dates_period">%1$s – %2$s</string>
-
-    <!-- Long week days -->
-    <string name="slycalendar_monday">Monday</string>
-    <string name="slycalendar_tuesday">Tuesday</string>
-    <string name="slycalendar_wednesday">Wednesday</string>
-    <string name="slycalendar_thursday">Thursday</string>
-    <string name="slycalendar_friday">Friday</string>
-    <string name="slycalendar_saturday">Saturday</string>
-    <string name="slycalendar_sunday">Sunday</string>
 
     <!-- Short week days -->
     <string name="slycalendar_mon">Mon</string>
@@ -28,33 +19,5 @@
     <string name="slycalendar_fri">Fri</string>
     <string name="slycalendar_sat">Sat</string>
     <string name="slycalendar_sun">Sun</string>
-
-    <!-- Long month -->
-    <string name="slycalendar_january">January</string>
-    <string name="slycalendar_february">February</string>
-    <string name="slycalendar_march">March</string>
-    <string name="slycalendar_april">April</string>
-    <string name="slycalendar_may_long">May</string>
-    <string name="slycalendar_june">June</string>
-    <string name="slycalendar_july">July</string>
-    <string name="slycalendar_august">August</string>
-    <string name="slycalendar_september">September</string>
-    <string name="slycalendar_october">October</string>
-    <string name="slycalendar_november">November</string>
-    <string name="slycalendar_december">December</string>
-    
-    <!-- Short month -->
-    <string name="slycalendar_jan">Jan</string>
-    <string name="slycalendar_feb">Feb</string>
-    <string name="slycalendar_mar">March</string>
-    <string name="slycalendar_apr">Apr</string>
-    <string name="slycalendar_may">May</string>
-    <string name="slycalendar_jun">Jun</string>
-    <string name="slycalendar_jul">Jul</string>
-    <string name="slycalendar_aug">Aug</string>
-    <string name="slycalendar_sep">Sep</string>
-    <string name="slycalendar_oct">Oct</string>
-    <string name="slycalendar_nov">Nov</string>
-    <string name="slycalendar_dec">Dec</string>
 
 </resources>

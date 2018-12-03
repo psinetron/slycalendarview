@@ -1,5 +1,6 @@
 package ru.slybeaver.slycalendarview;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
@@ -11,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import ru.slybeaver.slycalendarview.adapters.GridAdapter;
 import ru.slybeaver.slycalendarview.listeners.DateSelectListener;
 import ru.slybeaver.slycalendarview.listeners.DialogCompleteListener;
 
@@ -89,6 +90,7 @@ class SlyCalendarView extends FrameLayout implements DateSelectListener {
 
     private void showCalendar() {
         paintCalendar();
+        showTime();
 
         findViewById(R.id.txtCancel).setOnClickListener(new OnClickListener() {
             @Override
@@ -181,6 +183,20 @@ class SlyCalendarView extends FrameLayout implements DateSelectListener {
             }
         });
 
+        findViewById(R.id.txtTime).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog tpd = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        slyCalendarData.setSelectedHour(hourOfDay);
+                        slyCalendarData.setSelectedMinutes(minute);
+                        showTime();
+                    }
+                }, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes(), true);
+                tpd.show();
+            }
+        });
 
         ((TextView) findViewById(R.id.day1)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_mon) : getContext().getString(R.string.slycalendar_sun));
         ((TextView) findViewById(R.id.day2)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_tue) : getContext().getString(R.string.slycalendar_mon));
@@ -235,4 +251,17 @@ class SlyCalendarView extends FrameLayout implements DateSelectListener {
     private void paintCalendar() {
         findViewById(R.id.mainFrame).setBackgroundColor(slyCalendarData.getBackgroundColor());
     }
+
+
+
+    private void showTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, slyCalendarData.getSelectedHour());
+        calendar.set(Calendar.MINUTE, slyCalendarData.getSelectedMinutes());
+        ((TextView) findViewById(R.id.txtTime)).setText(
+                new SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.getTime())
+        );
+
+    }
+
 }

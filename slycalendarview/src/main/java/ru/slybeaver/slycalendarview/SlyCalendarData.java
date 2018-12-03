@@ -7,11 +7,14 @@ import java.util.Date;
  * Created by psinetron on 29/11/2018.
  * http://slybeaver.ru
  */
-public class SlyCalendarData {
+class SlyCalendarData {
 
     private Date showDate = null; //current showing date
     private Date selectedStartDate = null; // first selected date
     private Date selectedEndDate = null; // ended selected date
+    private int selectedHour = 0;
+    private int selectedMinutes = 0;
+
     private boolean firstMonday = true; // is first monday
     private boolean single = true;
 
@@ -52,6 +55,22 @@ public class SlyCalendarData {
 
     public void setSelectedEndDate(Date selectedEndDate) {
         this.selectedEndDate = selectedEndDate;
+    }
+
+    public int getSelectedHour() {
+        return selectedHour;
+    }
+
+    public void setSelectedHour(int selectedHour) {
+        this.selectedHour = selectedHour;
+    }
+
+    public int getSelectedMinutes() {
+        return selectedMinutes;
+    }
+
+    public void setSelectedMinutes(int selectedMinutes) {
+        this.selectedMinutes = selectedMinutes;
     }
 
     public boolean isFirstMonday() {
