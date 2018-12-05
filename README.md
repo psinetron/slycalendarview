@@ -1,6 +1,7 @@
 # Sly Calendar View
 
 [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=plastic)](https://android-arsenal.com/api?level=16)
+[![](https://jitpack.io/v/psinetron/slycalendarview.svg)](https://jitpack.io/#psinetron/slycalendarview)
 
 
 A calendar that allows you to select both a single date and a period.
