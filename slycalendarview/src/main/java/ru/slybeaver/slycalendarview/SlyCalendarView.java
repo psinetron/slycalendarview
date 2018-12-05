@@ -118,7 +118,7 @@ class SlyCalendarView extends FrameLayout implements DateSelectListener {
                         end = Calendar.getInstance();
                         end.setTime(slyCalendarData.getSelectedEndDate());
                     }
-                    callback.onDataSelected(start, end);
+                    callback.onDataSelected(start, end, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes());
                 }
                 if (completeListener!=null) {
                     completeListener.complete();
@@ -186,7 +186,13 @@ class SlyCalendarView extends FrameLayout implements DateSelectListener {
         findViewById(R.id.txtTime).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog tpd = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+
+                int style = R.style.SlyCalendarTimeDialogTheme;
+                if (slyCalendarData.getTimeTheme()!=null) {
+                    style = slyCalendarData.getTimeTheme();
+                }
+
+                TimePickerDialog tpd = new TimePickerDialog(getContext(), style,  new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         slyCalendarData.setSelectedHour(hourOfDay);

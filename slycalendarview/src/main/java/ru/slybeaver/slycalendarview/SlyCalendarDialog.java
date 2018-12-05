@@ -24,24 +24,34 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
     private SlyCalendarView calendarView;
     private Callback callback = null;
 
-    public void setStartDate(@Nullable Date startDate) {
+    public SlyCalendarDialog setStartDate(@Nullable Date startDate) {
         slyCalendarData.setSelectedStartDate(startDate);
+        return this;
     }
 
-    public void setEndDate(@Nullable Date endDate) {
+    public SlyCalendarDialog setEndDate(@Nullable Date endDate) {
         slyCalendarData.setSelectedEndDate(endDate);
+        return this;
     }
 
-    public void setSingle(boolean single) {
+    public SlyCalendarDialog setSingle(boolean single) {
         slyCalendarData.setSingle(single);
+        return this;
     }
 
-    public void setFirstMonday(boolean firsMonday) {
+    public SlyCalendarDialog setFirstMonday(boolean firsMonday) {
         slyCalendarData.setFirstMonday(firsMonday);
+        return this;
     }
 
-    public void setCallback(Callback callback) {
+    public SlyCalendarDialog setCallback(@Nullable Callback callback) {
         this.callback = callback;
+        return this;
+    }
+
+    public SlyCalendarDialog setTimeTheme(@Nullable Integer themeResource) {
+        slyCalendarData.setTimeTheme(themeResource);
+        return this;
     }
 
     @Override
@@ -70,7 +80,7 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
     public interface Callback {
         void onCancelled();
 
-        void onDataSelected(Calendar firstDate, Calendar secondDate);
+        void onDataSelected(Calendar firstDate, Calendar secondDate, int hours, int minutes);
     }
 
 

@@ -15,6 +15,7 @@ class SlyCalendarData {
     private int selectedHour = 0;
     private int selectedMinutes = 0;
 
+
     private boolean firstMonday = true; // is first monday
     private boolean single = true;
 
@@ -24,11 +25,11 @@ class SlyCalendarData {
     private Integer textColor = null;
     private Integer selectedColor = null;
     private Integer selectedTextColor = null;
-
+    private Integer timeTheme = null;
 
     public Date getShowDate() {
         if (showDate == null) {
-            if (selectedStartDate!=null) {
+            if (selectedStartDate != null) {
                 showDate = (Date) selectedStartDate.clone();
             } else {
                 showDate = Calendar.getInstance().getTime();
@@ -135,5 +136,13 @@ class SlyCalendarData {
 
     public void setSingle(boolean single) {
         this.single = single;
+    }
+
+    public Integer getTimeTheme() {
+        return timeTheme;
+    }
+
+    public void setTimeTheme(Integer timeTheme) {
+        this.timeTheme = timeTheme;
     }
 }
