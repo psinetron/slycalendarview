@@ -256,6 +256,7 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
 
     private void paintCalendar() {
         findViewById(R.id.mainFrame).setBackgroundColor(slyCalendarData.getBackgroundColor());
+        findViewById(R.id.headerView).setBackgroundColor(slyCalendarData.getHeaderColor());
         ((TextView)findViewById(R.id.txtYear)).setTextColor(slyCalendarData.getHeaderTextColor());
         ((TextView)findViewById(R.id.txtSelectedPeriod)).setTextColor(slyCalendarData.getHeaderTextColor());
         ((TextView)findViewById(R.id.txtTime)).setTextColor(slyCalendarData.getHeaderColor());
