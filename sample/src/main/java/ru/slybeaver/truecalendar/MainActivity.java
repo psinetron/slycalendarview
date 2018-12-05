@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
             public void onClick(View v) {
                 new SlyCalendarDialog()
                         .setSingle(false)
+                        .setHeaderColor(Color.parseColor("#00ff00"))
                         .setCallback(MainActivity.this)
                         .show(getSupportFragmentManager(), "TAG_SLYCALENDAR");
             }
