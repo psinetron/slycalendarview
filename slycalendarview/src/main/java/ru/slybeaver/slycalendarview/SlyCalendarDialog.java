@@ -85,28 +85,34 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
 
 
 
-    public void setBackgroundColor(Integer backgroundColor) {
+    public SlyCalendarDialog setBackgroundColor(Integer backgroundColor) {
         slyCalendarData.setBackgroundColor(backgroundColor);
+        return this;
     }
 
-    public void setHeaderColor(Integer headerColor) {
+    public SlyCalendarDialog setHeaderColor(Integer headerColor) {
         slyCalendarData.setHeaderColor(headerColor);
+        return this;
     }
 
-    public void setHeaderTextColor(Integer headerTextColor) {
+    public SlyCalendarDialog setHeaderTextColor(Integer headerTextColor) {
         slyCalendarData.setHeaderTextColor(headerTextColor);
+        return this;
     }
 
-    public void setTextColor(Integer textColor) {
+    public SlyCalendarDialog setTextColor(Integer textColor) {
         slyCalendarData.setTextColor(textColor);
+        return this;
     }
 
-    public void setSelectedColor(Integer selectedColor) {
+    public SlyCalendarDialog setSelectedColor(Integer selectedColor) {
         slyCalendarData.setSelectedColor(selectedColor);
+        return this;
     }
 
-    public void setSelectedTextColor(Integer selectedTextColor) {
+    public SlyCalendarDialog setSelectedTextColor(Integer selectedTextColor) {
         slyCalendarData.setSelectedTextColor(selectedTextColor);
+        return this;
     }
 
 

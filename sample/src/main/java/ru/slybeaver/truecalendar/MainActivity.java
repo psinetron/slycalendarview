@@ -1,5 +1,6 @@
 package ru.slybeaver.truecalendar;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,6 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         findViewById(R.id.btnShowCalendar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
                         .show(getSupportFragmentManager(), "TAG_SLYCALENDAR");
             }
         });
+
+
+
     }
 
     @Override
