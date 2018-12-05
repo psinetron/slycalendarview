@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">TrueCalendar</string>
+    <string name="app_name" translatable="false">Sly Calendar View</string>
+    <string name="dateFormat" translatable="false">EE, dd MMM</string>
+    <string name="timeFormat" translatable="false">EE, dd MMM HH:mm</string>
+    <string name="period" translatable="false">%1$s – %2$s</string>
 </resources>

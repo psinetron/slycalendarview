@@ -26,7 +26,7 @@ import ru.slybeaver.slycalendarview.listeners.DialogCompleteListener;
  * Created by psinetron on 29/11/2018.
  * http://slybeaver.ru
  */
-class SlyCalendarView extends FrameLayout implements DateSelectListener {
+public class SlyCalendarView extends FrameLayout implements DateSelectListener {
 
     private SlyCalendarData slyCalendarData = new SlyCalendarData();
 
