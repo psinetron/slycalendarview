@@ -11,13 +11,4 @@
     <string name="slycalendar_next">Next</string>
     <string name="slycalendar_prev">Prev</string>
 
-    <!-- Short week days -->
-    <string name="slycalendar_mon">Mon</string>
-    <string name="slycalendar_tue">Tue</string>
-    <string name="slycalendar_wed">Wed</string>
-    <string name="slycalendar_thu">Thu</string>
-    <string name="slycalendar_fri">Fri</string>
-    <string name="slycalendar_sat">Sat</string>
-    <string name="slycalendar_sun">Sun</string>
-
 </resources>

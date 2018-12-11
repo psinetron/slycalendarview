@@ -4,13 +4,4 @@
     <string name="slycalendar_save">Сохранить</string>
     <string name="slycalendar_next">Вперед</string>
     <string name="slycalendar_prev">Назад</string>
-
-    <!-- Short week days -->
-    <string name="slycalendar_mon">Пн</string>
-    <string name="slycalendar_tue">Вт</string>
-    <string name="slycalendar_wed">Ср</string>
-    <string name="slycalendar_thu">Чт</string>
-    <string name="slycalendar_fri">Пт</string>
-    <string name="slycalendar_sat">Сб</string>
-    <string name="slycalendar_sun">Вс</string>
 </resources>

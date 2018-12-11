@@ -12,15 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import ru.slybeaver.slycalendarview.R;
-import ru.slybeaver.slycalendarview.SlyCalendarData;
 import ru.slybeaver.slycalendarview.listeners.DateSelectListener;
+import ru.slybeaver.slycalendarview.listeners.GridChangeListener;
 
 /**
  * Created by psinetron on 29/11/2018.
@@ -29,15 +27,20 @@ import ru.slybeaver.slycalendarview.listeners.DateSelectListener;
 public class GridAdapter extends ArrayAdapter {
 
     private SlyCalendarData calendarData;
+    private int shiftMonth;
     private ArrayList<Date> monthlyDates = new ArrayList<>();
     private DateSelectListener listener;
     private LayoutInflater inflater;
+    private GridChangeListener gridListener;
 
-    public GridAdapter(@NonNull Context context, @NonNull SlyCalendarData calendarData, @Nullable DateSelectListener listener) {
+
+    public GridAdapter(@NonNull Context context, @NonNull SlyCalendarData calendarData, int shiftMonth, @Nullable DateSelectListener listener, GridChangeListener gridListener) {
         super(context, R.layout.slycalendar_single_cell);
         this.calendarData = calendarData;
         this.listener = listener;
         this.inflater = LayoutInflater.from(context);
+        this.shiftMonth = shiftMonth;
+        this.gridListener = gridListener;
         init();
     }
 
@@ -75,6 +78,8 @@ public class GridAdapter extends ArrayAdapter {
         ((TextView) view.findViewById(R.id.txtDate)).setText(String.valueOf(dateCal.get(Calendar.DAY_OF_MONTH)));
         view.findViewById(R.id.cellView).setBackgroundResource(R.color.slycalendar_defBackgroundColor);
 
+
+
         view.findViewById(R.id.cellView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +90,8 @@ public class GridAdapter extends ArrayAdapter {
                 selectedDate.set(Calendar.SECOND,0);
                 selectedDate.set(Calendar.MILLISECOND,0);
                 if (listener!=null) listener.dateSelect(selectedDate.getTime());
+                notifyDataSetChanged();
+                gridListener.gridChanged();
             }
         });
 
@@ -98,6 +105,8 @@ public class GridAdapter extends ArrayAdapter {
                 selectedDate.set(Calendar.SECOND,0);
                 selectedDate.set(Calendar.MILLISECOND,0);
                 if (listener!=null) listener.dateLongSelect(monthlyDates.get(position));
+                notifyDataSetChanged();
+                gridListener.gridChanged();
                 return true;
             }
         });
@@ -146,7 +155,10 @@ public class GridAdapter extends ArrayAdapter {
 
         Calendar currentDate = Calendar.getInstance();
         currentDate.setTime(calendarData.getShowDate());
+        currentDate.add(Calendar.MONTH, shiftMonth);
 
+        view.findViewById(R.id.frameSelected).setBackgroundResource(0);
+        ((TextView) view.findViewById(R.id.txtDate)).setTextColor(calendarData.getTextColor());
         if (calendarStart != null && dateCal.get(Calendar.DAY_OF_YEAR) == calendarStart.get(Calendar.DAY_OF_YEAR) && currentDate.get(Calendar.MONTH) == dateCal.get(Calendar.MONTH) && dateCal.get(Calendar.YEAR) == calendarStart.get(Calendar.YEAR)) {
             LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.slycalendar_selected_day);
             assert shape != null;
@@ -184,17 +196,11 @@ public class GridAdapter extends ArrayAdapter {
         return monthlyDates.get(position);
     }
 
-
-    public void updateCalendarData(SlyCalendarData calendarData) {
-        this.calendarData = calendarData;
-        init();
-        notifyDataSetChanged();
-    }
-
     private void init() {
         monthlyDates = new ArrayList<>();
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTime(calendarData.getShowDate());
+        calendar.add(Calendar.MONTH, shiftMonth);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         int firstDayOfTheMonth = calendarData.isFirstMonday() ? calendar.get(Calendar.DAY_OF_WEEK) - 2 : calendar.get(Calendar.DAY_OF_WEEK) - 1;
         calendar.add(Calendar.DAY_OF_MONTH, -firstDayOfTheMonth);

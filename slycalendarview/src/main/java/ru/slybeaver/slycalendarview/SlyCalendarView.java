@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -28,11 +26,14 @@ import ru.slybeaver.slycalendarview.listeners.DialogCompleteListener;
  */
 public class SlyCalendarView extends FrameLayout implements DateSelectListener {
 
-    private SlyCalendarData slyCalendarData = new SlyCalendarData();
+    private SlyCalendarData slyCalendarData;
 
     private SlyCalendarDialog.Callback callback = null;
 
     private DialogCompleteListener completeListener = null;
+
+    private AttributeSet attrs = null;
+    private int defStyleAttr = 0;
 
 
     public SlyCalendarView(Context context) {
@@ -42,12 +43,14 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
 
     public SlyCalendarView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, 0);
+        this.attrs = attrs;
     }
 
     public SlyCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        this.attrs = attrs;
+        this.defStyleAttr = defStyleAttr;
+
     }
 
     public void setCallback(@Nullable SlyCalendarDialog.Callback callback) {
@@ -59,13 +62,8 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
     }
 
     public void setSlyCalendarData(SlyCalendarData slyCalendarData) {
-        if (slyCalendarData.getBackgroundColor()==null) {slyCalendarData.setBackgroundColor(this.slyCalendarData.getBackgroundColor());}
-        if (slyCalendarData.getHeaderColor()==null) {slyCalendarData.setHeaderColor(this.slyCalendarData.getHeaderColor());}
-        if (slyCalendarData.getHeaderTextColor()==null) {slyCalendarData.setHeaderTextColor(this.slyCalendarData.getHeaderTextColor());}
-        if (slyCalendarData.getTextColor()==null) {slyCalendarData.setTextColor(this.slyCalendarData.getTextColor());}
-        if (slyCalendarData.getSelectedColor()==null) {slyCalendarData.setSelectedColor(this.slyCalendarData.getSelectedColor());}
-        if (slyCalendarData.getSelectedTextColor()==null) {slyCalendarData.setSelectedTextColor(this.slyCalendarData.getSelectedTextColor());}
         this.slyCalendarData = slyCalendarData;
+        init(attrs, defStyleAttr);
         showCalendar();
     }
 
@@ -73,22 +71,36 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         inflate(getContext(), R.layout.slycalendar_frame, this);
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SlyCalendarView, defStyle, 0);
 
-        slyCalendarData.setBackgroundColor(typedArray.getColor(R.styleable.SlyCalendarView_backgroundColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defBackgroundColor)));
-        slyCalendarData.setHeaderColor(typedArray.getColor(R.styleable.SlyCalendarView_headerColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defHeaderColor)));
-        slyCalendarData.setHeaderTextColor(typedArray.getColor(R.styleable.SlyCalendarView_headerTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defHeaderTextColor)));
-        slyCalendarData.setTextColor(typedArray.getColor(R.styleable.SlyCalendarView_textColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defTextColor)));
-        slyCalendarData.setSelectedColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedColor)));
-        slyCalendarData.setSelectedTextColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedTextColor)));
+        if (slyCalendarData.getBackgroundColor() == null) {
+            slyCalendarData.setBackgroundColor(typedArray.getColor(R.styleable.SlyCalendarView_backgroundColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defBackgroundColor)));
+        }
+        if (slyCalendarData.getHeaderColor() == null) {
+            slyCalendarData.setHeaderColor(typedArray.getColor(R.styleable.SlyCalendarView_headerColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defHeaderColor)));
+        }
+        if (slyCalendarData.getHeaderTextColor() == null) {
+            slyCalendarData.setHeaderTextColor(typedArray.getColor(R.styleable.SlyCalendarView_headerTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defHeaderTextColor)));
+        }
+        if (slyCalendarData.getTextColor() == null) {
+            slyCalendarData.setTextColor(typedArray.getColor(R.styleable.SlyCalendarView_textColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defTextColor)));
+        }
+        if (slyCalendarData.getSelectedColor() == null) {
+            slyCalendarData.setSelectedColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedColor)));
+        }
+        if (slyCalendarData.getSelectedTextColor() == null) {
+            slyCalendarData.setSelectedTextColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedTextColor)));
+        }
 
         typedArray.recycle();
 
-        ((ViewGroup) findViewById(R.id.content)).removeAllViews();
-        LayoutInflater.from(getContext()).inflate(R.layout.slycalendar_calendar, (ViewGroup) findViewById(R.id.content), true);
+        final ViewPager vpager = findViewById(R.id.content);
+        vpager.setAdapter(new MonthPagerAdapter(slyCalendarData, this));
+        vpager.setCurrentItem(vpager.getAdapter().getCount() / 2);
 
         showCalendar();
     }
 
     private void showCalendar() {
+
         paintCalendar();
         showTime();
 
@@ -98,7 +110,7 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
                 if (callback != null) {
                     callback.onCancelled();
                 }
-                if (completeListener!=null) {
+                if (completeListener != null) {
                     completeListener.complete();
                 }
             }
@@ -107,20 +119,20 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         findViewById(R.id.txtSave).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null) {
+                if (callback != null) {
                     Calendar start = null;
                     Calendar end = null;
-                    if (slyCalendarData.getSelectedStartDate()!=null) {
+                    if (slyCalendarData.getSelectedStartDate() != null) {
                         start = Calendar.getInstance();
                         start.setTime(slyCalendarData.getSelectedStartDate());
                     }
-                    if (slyCalendarData.getSelectedEndDate()!=null) {
+                    if (slyCalendarData.getSelectedEndDate() != null) {
                         end = Calendar.getInstance();
                         end.setTime(slyCalendarData.getSelectedEndDate());
                     }
                     callback.onDataSelected(start, end, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes());
                 }
-                if (completeListener!=null) {
+                if (completeListener != null) {
                     completeListener.complete();
                 }
             }
@@ -159,27 +171,20 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             }
         }
 
-        ((TextView) findViewById(R.id.txtSelectedMonth)).setText(new SimpleDateFormat("LLLL yyyy", Locale.getDefault()).format(slyCalendarData.getShowDate()));
 
         findViewById(R.id.btnMonthPrev).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar currentCalendar = Calendar.getInstance();
-                currentCalendar.setTime(slyCalendarData.getShowDate());
-                currentCalendar.add(Calendar.MONTH, -1);
-                slyCalendarData.setShowDate(currentCalendar.getTime());
-                showCalendar();
+                ViewPager vpager = findViewById(R.id.content);
+                vpager.setCurrentItem(vpager.getCurrentItem()-1);
             }
         });
 
         findViewById(R.id.btnMonthNext).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar currentCalendar = Calendar.getInstance();
-                currentCalendar.setTime(slyCalendarData.getShowDate());
-                currentCalendar.add(Calendar.MONTH, 1);
-                slyCalendarData.setShowDate(currentCalendar.getTime());
-                showCalendar();
+                ViewPager vpager = findViewById(R.id.content);
+                vpager.setCurrentItem(vpager.getCurrentItem()+1);
             }
         });
 
@@ -188,11 +193,11 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             public void onClick(View v) {
 
                 int style = R.style.SlyCalendarTimeDialogTheme;
-                if (slyCalendarData.getTimeTheme()!=null) {
+                if (slyCalendarData.getTimeTheme() != null) {
                     style = slyCalendarData.getTimeTheme();
                 }
 
-                TimePickerDialog tpd = new TimePickerDialog(getContext(), style,  new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog tpd = new TimePickerDialog(getContext(), style, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         slyCalendarData.setSelectedHour(hourOfDay);
@@ -204,21 +209,15 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             }
         });
 
-        ((TextView) findViewById(R.id.day1)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_mon) : getContext().getString(R.string.slycalendar_sun));
-        ((TextView) findViewById(R.id.day2)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_tue) : getContext().getString(R.string.slycalendar_mon));
-        ((TextView) findViewById(R.id.day3)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_wed) : getContext().getString(R.string.slycalendar_tue));
-        ((TextView) findViewById(R.id.day4)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_thu) : getContext().getString(R.string.slycalendar_wed));
-        ((TextView) findViewById(R.id.day5)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_fri) : getContext().getString(R.string.slycalendar_thu));
-        ((TextView) findViewById(R.id.day6)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_sat) : getContext().getString(R.string.slycalendar_fri));
-        ((TextView) findViewById(R.id.day7)).setText(slyCalendarData.isFirstMonday() ? getContext().getString(R.string.slycalendar_sun) : getContext().getString(R.string.slycalendar_sat));
+        ViewPager vpager = findViewById(R.id.content);
+        vpager.getAdapter().notifyDataSetChanged();
+        vpager.invalidate();
 
-        GridAdapter adapter = new GridAdapter(getContext(), slyCalendarData, this);
-        ((GridView) findViewById(R.id.calendarGrid)).setAdapter(adapter);
     }
 
     @Override
     public void dateSelect(Date selectedDate) {
-        if (slyCalendarData.getSelectedStartDate()==null || slyCalendarData.isSingle()) {
+        if (slyCalendarData.getSelectedStartDate() == null || slyCalendarData.isSingle()) {
             slyCalendarData.setSelectedStartDate(selectedDate);
             showCalendar();
             return;
@@ -257,12 +256,11 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
     private void paintCalendar() {
         findViewById(R.id.mainFrame).setBackgroundColor(slyCalendarData.getBackgroundColor());
         findViewById(R.id.headerView).setBackgroundColor(slyCalendarData.getHeaderColor());
-        ((TextView)findViewById(R.id.txtYear)).setTextColor(slyCalendarData.getHeaderTextColor());
-        ((TextView)findViewById(R.id.txtSelectedPeriod)).setTextColor(slyCalendarData.getHeaderTextColor());
-        ((TextView)findViewById(R.id.txtTime)).setTextColor(slyCalendarData.getHeaderColor());
+        ((TextView) findViewById(R.id.txtYear)).setTextColor(slyCalendarData.getHeaderTextColor());
+        ((TextView) findViewById(R.id.txtSelectedPeriod)).setTextColor(slyCalendarData.getHeaderTextColor());
+        ((TextView) findViewById(R.id.txtTime)).setTextColor(slyCalendarData.getHeaderColor());
 
     }
-
 
 
     private void showTime() {

@@ -2,6 +2,7 @@ package ru.slybeaver.slycalendarview;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -21,7 +22,6 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
 
 
     private SlyCalendarData slyCalendarData = new SlyCalendarData();
-    private SlyCalendarView calendarView;
     private Callback callback = null;
 
     public SlyCalendarDialog setStartDate(@Nullable Date startDate) {
@@ -63,8 +63,8 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        calendarView = (SlyCalendarView)getActivity().getLayoutInflater().inflate(R.layout.slycalendar_main, container);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        SlyCalendarView calendarView = (SlyCalendarView) getActivity().getLayoutInflater().inflate(R.layout.slycalendar_main, container);
         calendarView.setSlyCalendarData(slyCalendarData);
         calendarView.setCallback(callback);
         calendarView.setCompleteListener(this);
@@ -82,7 +82,6 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
 
         void onDataSelected(Calendar firstDate, Calendar secondDate, int hours, int minutes);
     }
-
 
 
     public SlyCalendarDialog setBackgroundColor(Integer backgroundColor) {
