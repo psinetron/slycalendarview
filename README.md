@@ -2,6 +2,7 @@
 
 [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![](https://jitpack.io/v/psinetron/slycalendarview.svg)](https://jitpack.io/#psinetron/slycalendarview)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SlyCalendarView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7354)
 
 
 A calendar that allows you to select both a single date and a period.
