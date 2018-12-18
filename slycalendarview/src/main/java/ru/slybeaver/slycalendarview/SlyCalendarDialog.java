@@ -60,6 +60,16 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
         setStyle(DialogFragment.STYLE_NORMAL, R.style.SlyCalendarDialogStyle);
     }
 
+    @Nullable
+    public Date getCalendarFirstDate() {
+        return slyCalendarData.getSelectedStartDate();
+    }
+
+    @Nullable
+    public Date getCalendarSecondDate() {
+        return slyCalendarData.getSelectedEndDate();
+    }
+
 
     @Nullable
     @Override
