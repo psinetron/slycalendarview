@@ -143,6 +143,9 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         Calendar calendarEnd = null;
         if (slyCalendarData.getSelectedStartDate() != null) {
             calendarStart.setTime(slyCalendarData.getSelectedStartDate());
+
+            slyCalendarData.setSelectedHour(calendarStart.get(Calendar.HOUR_OF_DAY));
+            slyCalendarData.setSelectedMinutes(calendarStart.get(Calendar.MINUTE));
         } else {
             calendarStart.setTime(slyCalendarData.getShowDate());
         }
