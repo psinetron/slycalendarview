@@ -102,7 +102,8 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
     private void showCalendar() {
 
         paintCalendar();
-        showTime();
+        if(slyCalendarData.isTimeEnabled())
+            showTime();
 
         findViewById(R.id.txtCancel).setOnClickListener(new OnClickListener() {
             @Override
@@ -188,26 +189,28 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             }
         });
 
-        findViewById(R.id.txtTime).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                int style = R.style.SlyCalendarTimeDialogTheme;
-                if (slyCalendarData.getTimeTheme() != null) {
-                    style = slyCalendarData.getTimeTheme();
-                }
+        if(slyCalendarData.isTimeEnabled())
+            findViewById(R.id.txtTime).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                TimePickerDialog tpd = new TimePickerDialog(getContext(), style, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        slyCalendarData.setSelectedHour(hourOfDay);
-                        slyCalendarData.setSelectedMinutes(minute);
-                        showTime();
+                    int style = R.style.SlyCalendarTimeDialogTheme;
+                    if (slyCalendarData.getTimeTheme() != null) {
+                        style = slyCalendarData.getTimeTheme();
                     }
-                }, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes(), true);
-                tpd.show();
-            }
-        });
+
+                    TimePickerDialog tpd = new TimePickerDialog(getContext(), style, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            slyCalendarData.setSelectedHour(hourOfDay);
+                            slyCalendarData.setSelectedMinutes(minute);
+                            showTime();
+                        }
+                    }, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes(), true);
+                    tpd.show();
+                }
+            });
 
         ViewPager vpager = findViewById(R.id.content);
         vpager.getAdapter().notifyDataSetChanged();
