@@ -118,7 +118,6 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 
-gradle/*
 .idea/
 gradlew
 gradlew.bat
