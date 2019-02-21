@@ -124,5 +124,13 @@ public class SlyCalendarDialog extends DialogFragment implements DialogCompleteL
         return this;
     }
 
+    public boolean isTimeEnabled() {
+        return slyCalendarData.isTimeEnabled();
+    }
+
+    public void setTimeEnabled(boolean timeEnabled) {
+        this.setTimeEnabled(timeEnabled);
+    }
+
 
 }
