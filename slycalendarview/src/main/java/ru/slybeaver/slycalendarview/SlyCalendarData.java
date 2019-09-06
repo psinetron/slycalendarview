@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by psinetron on 29/11/2018.
  * http://slybeaver.ru
  */
-class SlyCalendarData {
+public class SlyCalendarData {
 
     private Date showDate = null; //current showing date
     private Date selectedStartDate = null; // first selected date
