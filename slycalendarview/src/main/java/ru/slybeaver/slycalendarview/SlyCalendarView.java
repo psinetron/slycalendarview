@@ -90,6 +90,10 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             slyCalendarData.setSelectedTextColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedTextColor)));
         }
 
+        if (!typedArray.getBoolean(R.styleable.SlyCalendarView_optionsBarEnabled, true)) {
+            disableOptionsBar();
+        }
+
         typedArray.recycle();
 
         final ViewPager vpager = findViewById(R.id.content);
@@ -99,10 +103,14 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         showCalendar();
     }
 
+    private void disableOptionsBar() {
+        findViewById(R.id.optionsBar).setVisibility(GONE);
+    }
+
     private void showCalendar() {
 
         paintCalendar();
-        if(slyCalendarData.isTimeEnabled())
+        if (slyCalendarData.isTimeEnabled())
             showTime();
 
         findViewById(R.id.txtCancel).setOnClickListener(new OnClickListener() {
@@ -120,22 +128,7 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         findViewById(R.id.txtSave).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback != null) {
-                    Calendar start = null;
-                    Calendar end = null;
-                    if (slyCalendarData.getSelectedStartDate() != null) {
-                        start = Calendar.getInstance();
-                        start.setTime(slyCalendarData.getSelectedStartDate());
-                    }
-                    if (slyCalendarData.getSelectedEndDate() != null) {
-                        end = Calendar.getInstance();
-                        end.setTime(slyCalendarData.getSelectedEndDate());
-                    }
-                    callback.onDataSelected(start, end, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes());
-                }
-                if (completeListener != null) {
-                    completeListener.complete();
-                }
+                completeSelectionOnCalendar();
             }
         });
 
@@ -177,7 +170,7 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             @Override
             public void onClick(View v) {
                 ViewPager vpager = findViewById(R.id.content);
-                vpager.setCurrentItem(vpager.getCurrentItem()-1);
+                vpager.setCurrentItem(vpager.getCurrentItem() - 1);
             }
         });
 
@@ -185,12 +178,12 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             @Override
             public void onClick(View v) {
                 ViewPager vpager = findViewById(R.id.content);
-                vpager.setCurrentItem(vpager.getCurrentItem()+1);
+                vpager.setCurrentItem(vpager.getCurrentItem() + 1);
             }
         });
 
 
-        if(slyCalendarData.isTimeEnabled())
+        if (slyCalendarData.isTimeEnabled())
             findViewById(R.id.txtTime).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -216,6 +209,25 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         vpager.getAdapter().notifyDataSetChanged();
         vpager.invalidate();
 
+    }
+
+    public void completeSelectionOnCalendar() {
+        if (callback != null) {
+            Calendar start = null;
+            Calendar end = null;
+            if (slyCalendarData.getSelectedStartDate() != null) {
+                start = Calendar.getInstance();
+                start.setTime(slyCalendarData.getSelectedStartDate());
+            }
+            if (slyCalendarData.getSelectedEndDate() != null) {
+                end = Calendar.getInstance();
+                end.setTime(slyCalendarData.getSelectedEndDate());
+            }
+            callback.onDataSelected(start, end, slyCalendarData.getSelectedHour(), slyCalendarData.getSelectedMinutes());
+        }
+        if (completeListener != null) {
+            completeListener.complete();
+        }
     }
 
     @Override

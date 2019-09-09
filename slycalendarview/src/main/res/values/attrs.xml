@@ -8,5 +8,6 @@
         <attr name="selectedColor" format="color"/>
         <attr name="selectedTextColor" format="color"/>
         <attr name="firstMonday" format="boolean"/>
+        <attr name="optionsBarEnabled" format="boolean"/>
     </declare-styleable>
 </resources>
