@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cellView"
     android:layout_width="match_parent"
-    android:layout_height="42dp"
+    android:layout_height="50dp"
     android:foreground="?android:attr/actionBarItemBackground"
     android:background="#ff0000"
     android:clickable="true"
