@@ -32,8 +32,10 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
         });
 
         SlyCalendarView calendar = findViewById(R.id.calendar);
-        calendar.setSlyCalendarData(new SlyCalendarData());
-        calendar.setBarOptionsEnabled(true);
+        SlyCalendarData data = new SlyCalendarData();
+        data.setSingle(false);
+        calendar.setSlyCalendarData(data);
+        calendar.setBarOptionsEnabled(false);
     }
 
     @Override
