@@ -76,24 +76,19 @@ public class MonthPagerAdapter extends PagerAdapter {
         view.setTag(TAG_PREFIX + position);
         container.addView(view);
 
-        Calendar weekDays = Calendar.getInstance();
-        weekDays.set(Calendar.DAY_OF_WEEK, slyCalendarData.isFirstMonday() ? 2 : 1);
-        ((TextView) view.findViewById(R.id.day1)).setText(new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(0, 1).toUpperCase() + new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(1));
-        weekDays.set(Calendar.DAY_OF_WEEK, slyCalendarData.isFirstMonday() ? 3 : 2);
-        ((TextView) view.findViewById(R.id.day2)).setText(new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(0, 1).toUpperCase() + new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(1));
-        weekDays.set(Calendar.DAY_OF_WEEK, slyCalendarData.isFirstMonday() ? 4 : 3);
-        ((TextView) view.findViewById(R.id.day3)).setText(new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(0, 1).toUpperCase() + new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(1));
-        weekDays.set(Calendar.DAY_OF_WEEK, slyCalendarData.isFirstMonday() ? 5 : 4);
-        ((TextView) view.findViewById(R.id.day4)).setText(new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(0, 1).toUpperCase() + new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(1));
-        weekDays.set(Calendar.DAY_OF_WEEK, slyCalendarData.isFirstMonday() ? 6 : 5);
-        ((TextView) view.findViewById(R.id.day5)).setText(new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(0, 1).toUpperCase() + new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(1));
-        weekDays.set(Calendar.DAY_OF_WEEK, slyCalendarData.isFirstMonday() ? 7 : 6);
-        ((TextView) view.findViewById(R.id.day6)).setText(new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(0, 1).toUpperCase() + new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(1));
-        weekDays.set(Calendar.DAY_OF_WEEK, slyCalendarData.isFirstMonday() ? 1 : 7);
-        ((TextView) view.findViewById(R.id.day7)).setText(new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(0, 1).toUpperCase() + new SimpleDateFormat("EE", Locale.getDefault()).format(weekDays.getTime()).substring(1));
-
-
+        setDates(view, R.id.day1, R.id.day2, R.id.day3, R.id.day4, R.id.day5, R.id.day6, R.id.day7);
         return view;
+    }
+
+    private void setDates(View view, int... ids) {
+        Calendar weekDays = Calendar.getInstance();
+        weekDays.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EE", Locale.getDefault());
+        for (int id : ids) {
+            ((TextView) view.findViewById(id)).setText(dateFormat.format(weekDays.getTime()).substring(0, 1).toUpperCase() + dateFormat.format(weekDays.getTime()).substring(1));
+            weekDays.add(Calendar.DAY_OF_WEEK, 1);
+        }
     }
 
     @Override
