@@ -90,10 +90,6 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
             slyCalendarData.setSelectedTextColor(typedArray.getColor(R.styleable.SlyCalendarView_selectedTextColor, ContextCompat.getColor(getContext(), R.color.slycalendar_defSelectedTextColor)));
         }
 
-        if (!typedArray.getBoolean(R.styleable.SlyCalendarView_optionsBarEnabled, true)) {
-            disableOptionsBar();
-        }
-
         typedArray.recycle();
 
         final ViewPager vpager = findViewById(R.id.content);
@@ -103,8 +99,14 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         showCalendar();
     }
 
-    private void disableOptionsBar() {
-        findViewById(R.id.optionsBar).setVisibility(GONE);
+    public void setBarOptionsEnabled(boolean enabled) {
+        int visibility = GONE;
+
+        if (enabled) {
+            visibility = VISIBLE;
+        }
+
+        findViewById(R.id.optionsBar).setVisibility(visibility);
     }
 
     private void showCalendar() {

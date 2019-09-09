@@ -9,7 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import ru.slybeaver.slycalendarview.SlyCalendarData;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
+import ru.slybeaver.slycalendarview.SlyCalendarView;
 
 public class MainActivity extends AppCompatActivity implements SlyCalendarDialog.Callback {
 
@@ -28,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
                         .show(getSupportFragmentManager(), "TAG_SLYCALENDAR");
             }
         });
+
+        SlyCalendarView calendar = findViewById(R.id.calendar);
+        calendar.setSlyCalendarData(new SlyCalendarData());
+        calendar.setBarOptionsEnabled(true);
     }
 
     @Override
