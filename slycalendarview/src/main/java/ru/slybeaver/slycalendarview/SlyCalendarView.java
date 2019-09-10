@@ -263,6 +263,10 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         }
     }
 
+    public void setHeaderText(String value) {
+        ((TextView) findViewById(R.id.txtYear)).setText(value);
+    }
+
     @Override
     public void dateLongSelect(Date selectedDate) {
         slyCalendarData.setSelectedEndDate(null);
