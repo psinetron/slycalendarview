@@ -1,5 +1,6 @@
 package ru.slybeaver.truecalendar;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
         calendar.setSlyCalendarData(data);
         calendar.setBarOptionsEnabled(false);
         calendar.setHeaderText("Select yout value here");
+
+        calendar.setFontOnHeaderText(Typeface.SERIF);
     }
 
     @Override

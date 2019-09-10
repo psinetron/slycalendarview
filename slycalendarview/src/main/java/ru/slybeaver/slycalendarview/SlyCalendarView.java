@@ -3,6 +3,7 @@ package ru.slybeaver.slycalendarview;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -283,6 +284,13 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         headerText.setText(value);
     }
 
+    public void setFontOnHeaderText(Typeface typeface) {
+        headerText.setTypeface(typeface);
+    }
+
+    public void setFontOnPeriodTime(Typeface typeface){
+        periodView.setTypeface(typeface);
+    }
 
 
     @Override
