@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
         data.setSingle(false);
         calendar.setSlyCalendarData(data);
         calendar.setBarOptionsEnabled(false);
+        calendar.setHeaderText("Select yout value here");
     }
 
     @Override
