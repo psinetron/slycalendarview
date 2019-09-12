@@ -284,6 +284,10 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         headerText.setText(value);
     }
 
+    public void setPeriodText(String value) {
+        periodView.setText(value);
+    }
+
     public void setFontOnHeaderText(Typeface typeface) {
         headerText.setTypeface(typeface);
     }

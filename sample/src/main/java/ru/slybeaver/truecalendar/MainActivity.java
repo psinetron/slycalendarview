@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
         calendar.setSlyCalendarData(data);
         calendar.setBarOptionsEnabled(false);
         calendar.setHeaderText("Select yout value here");
+        calendar.setPeriodText("Start - End");
 
         calendar.setFontOnHeaderText(Typeface.SERIF);
     }
