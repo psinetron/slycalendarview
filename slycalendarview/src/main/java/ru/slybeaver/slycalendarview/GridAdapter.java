@@ -66,12 +66,16 @@ public class GridAdapter extends ArrayAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.slycalendar_single_cell, parent, false);
         }
+        View cell = view.findViewById(R.id.cellView);
+        TextView textDate = view.findViewById(R.id.txtDate);
+        View frame = view.findViewById(R.id.frameSelected);
 
-        ((TextView) view.findViewById(R.id.txtDate)).setText(String.valueOf(dateCal.get(Calendar.DAY_OF_MONTH)));
-        view.findViewById(R.id.cellView).setBackgroundResource(R.color.slycalendar_defBackgroundColor);
+
+        textDate.setText(String.valueOf(dateCal.get(Calendar.DAY_OF_MONTH)));
+        cell.setBackgroundResource(R.color.slycalendar_defBackgroundColor);
 
 
-        view.findViewById(R.id.cellView).setOnClickListener(new View.OnClickListener() {
+        cell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar selectedDate = Calendar.getInstance();
@@ -86,7 +90,7 @@ public class GridAdapter extends ArrayAdapter {
             }
         });
 
-        view.findViewById(R.id.cellView).setOnLongClickListener(new View.OnLongClickListener() {
+        cell.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 if (listener != null) listener.dateLongSelect(monthlyDates.get(position));
@@ -97,7 +101,7 @@ public class GridAdapter extends ArrayAdapter {
         });
 
 
-        view.findViewById(R.id.cellView).setBackgroundColor(calendarData.getBackgroundColor());
+        cell.setBackgroundColor(calendarData.getBackgroundColor());
 
         if (calendarStart != null && calendarEnd != null) {
             if (dateCal.get(Calendar.DAY_OF_YEAR) == calendarStart.get(Calendar.DAY_OF_YEAR) &&
@@ -132,29 +136,29 @@ public class GridAdapter extends ArrayAdapter {
         currentDate.setTime(calendarData.getShowDate());
         currentDate.add(Calendar.MONTH, shiftMonth);
 
-        view.findViewById(R.id.frameSelected).setBackgroundResource(0);
-        ((TextView) view.findViewById(R.id.txtDate)).setTextColor(calendarData.getTextColor());
+        frame.setBackgroundResource(0);
+        textDate.setTextColor(calendarData.getTextColor());
         if (calendarStart != null && dateCal.get(Calendar.DAY_OF_YEAR) == calendarStart.get(Calendar.DAY_OF_YEAR) && currentDate.get(Calendar.MONTH) == dateCal.get(Calendar.MONTH) && dateCal.get(Calendar.YEAR) == calendarStart.get(Calendar.YEAR)) {
             LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.slycalendar_selected_day);
             assert shape != null;
             ((GradientDrawable) shape.findDrawableByLayerId(R.id.selectedDateShapeItem)).setColor(calendarData.getSelectedColor());
-            view.findViewById(R.id.frameSelected).setBackground(shape);
-            ((TextView) view.findViewById(R.id.txtDate)).setTextColor(calendarData.getSelectedTextColor());
-            ((TextView) view.findViewById(R.id.txtDate)).setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+            frame.setBackground(shape);
+            textDate.setTextColor(calendarData.getSelectedTextColor());
+            textDate.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         }
 
         if (calendarEnd != null && dateCal.get(Calendar.DAY_OF_YEAR) == calendarEnd.get(Calendar.DAY_OF_YEAR) && currentDate.get(Calendar.MONTH) == dateCal.get(Calendar.MONTH) && dateCal.get(Calendar.YEAR) == calendarEnd.get(Calendar.YEAR)) {
             LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.slycalendar_selected_day);
             assert shape != null;
             ((GradientDrawable) shape.findDrawableByLayerId(R.id.selectedDateShapeItem)).setColor(calendarData.getSelectedColor());
-            view.findViewById(R.id.frameSelected).setBackground(shape);
-            ((TextView) view.findViewById(R.id.txtDate)).setTextColor(calendarData.getSelectedTextColor());
+            frame.setBackground(shape);
+            textDate.setTextColor(calendarData.getSelectedTextColor());
         }
 
         if (currentDate.get(Calendar.MONTH) == dateCal.get(Calendar.MONTH)) {
-            (view.findViewById(R.id.txtDate)).setAlpha(1);
+            textDate.setAlpha(1);
         } else {
-            (view.findViewById(R.id.txtDate)).setAlpha(.2f);
+            textDate.setAlpha(.2f);
         }
 
         return view;
@@ -181,12 +185,12 @@ public class GridAdapter extends ArrayAdapter {
         return calendarStart;
     }
 
-    private void setUpShapeBackgroundOn(View view, @DrawableRes int drawableResource) {
+    private void setUpShapeBackgroundOn(View cell, @DrawableRes int drawableResource) {
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), drawableResource);
         assert shape != null;
         ((GradientDrawable) shape.findDrawableByLayerId(R.id.dateShapeItem)).setColor(calendarData.getSelectedColor());
         (shape.findDrawableByLayerId(R.id.dateShapeItem)).setAlpha(20);
-        view.findViewById(R.id.cellView).setBackground(shape);
+        cell.setBackground(shape);
 
     }
 
