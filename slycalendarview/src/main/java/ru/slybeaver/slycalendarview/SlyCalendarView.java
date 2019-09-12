@@ -292,10 +292,19 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
         headerText.setTypeface(typeface);
     }
 
-    public void setFontOnPeriodTime(Typeface typeface){
+    public void setFontOnPeriodTime(Typeface typeface) {
         periodView.setTypeface(typeface);
     }
 
+
+    public boolean hasAllDatesBeenSelected() {
+
+        if (slyCalendarData.isSingle()) {
+            return slyCalendarData.getSelectedStartDate() != null;
+        }
+        return slyCalendarData.getSelectedStartDate() != null && slyCalendarData.getSelectedEndDate() != null;
+
+    }
 
     @Override
     public void dateLongSelect(Date selectedDate) {
