@@ -84,7 +84,8 @@ public class GridAdapter extends ArrayAdapter {
                 selectedDate.set(Calendar.MINUTE, 0);
                 selectedDate.set(Calendar.SECOND, 0);
                 selectedDate.set(Calendar.MILLISECOND, 0);
-                if (listener != null) listener.dateSelect(selectedDate.getTime());
+                if (listener != null && isSelected(selectedDate))
+                    listener.dateSelect(selectedDate.getTime());
                 notifyDataSetChanged();
                 gridListener.gridChanged();
             }
@@ -93,7 +94,10 @@ public class GridAdapter extends ArrayAdapter {
         cell.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (listener != null) listener.dateLongSelect(monthlyDates.get(position));
+                Calendar selectedDate = Calendar.getInstance();
+                selectedDate.setTime(monthlyDates.get(position));
+                if (listener != null && isSelected(selectedDate))
+                    listener.dateLongSelect(selectedDate.getTime());
                 notifyDataSetChanged();
                 gridListener.gridChanged();
                 return true;
@@ -133,12 +137,11 @@ public class GridAdapter extends ArrayAdapter {
 
 
         Calendar currentDate = Calendar.getInstance();
-        currentDate.setTime(calendarData.getShowDate());
-        currentDate.add(Calendar.MONTH, shiftMonth);
+
 
         frame.setBackgroundResource(0);
         textDate.setTextColor(calendarData.getTextColor());
-        if (calendarStart != null && dateCal.get(Calendar.DAY_OF_YEAR) == calendarStart.get(Calendar.DAY_OF_YEAR) && currentDate.get(Calendar.MONTH) == dateCal.get(Calendar.MONTH) && dateCal.get(Calendar.YEAR) == calendarStart.get(Calendar.YEAR)) {
+        if (calendarStart != null && dateCal.get(Calendar.DAY_OF_YEAR) == calendarStart.get(Calendar.DAY_OF_YEAR) && calendarStart.get(Calendar.YEAR) == dateCal.get(Calendar.YEAR)) {
             LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.slycalendar_selected_day);
             assert shape != null;
             ((GradientDrawable) shape.findDrawableByLayerId(R.id.selectedDateShapeItem)).setColor(calendarData.getSelectedColor());
@@ -147,21 +150,34 @@ public class GridAdapter extends ArrayAdapter {
             textDate.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         }
 
-        if (calendarEnd != null && dateCal.get(Calendar.DAY_OF_YEAR) == calendarEnd.get(Calendar.DAY_OF_YEAR) && currentDate.get(Calendar.MONTH) == dateCal.get(Calendar.MONTH) && dateCal.get(Calendar.YEAR) == calendarEnd.get(Calendar.YEAR)) {
+        if (calendarEnd != null && dateCal.get(Calendar.DAY_OF_YEAR) == calendarEnd.get(Calendar.DAY_OF_YEAR) && calendarEnd.get(Calendar.YEAR) == dateCal.get(Calendar.YEAR)) {
             LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.slycalendar_selected_day);
             assert shape != null;
             ((GradientDrawable) shape.findDrawableByLayerId(R.id.selectedDateShapeItem)).setColor(calendarData.getSelectedColor());
             frame.setBackground(shape);
             textDate.setTextColor(calendarData.getSelectedTextColor());
+            textDate.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+
         }
 
-        if (currentDate.get(Calendar.MONTH) == dateCal.get(Calendar.MONTH)) {
+        if (isBefore(currentDate, dateCal)) {
             textDate.setAlpha(1);
         } else {
             textDate.setAlpha(.2f);
         }
 
         return view;
+    }
+
+
+    private boolean isBefore(Calendar current, Calendar another) {
+        return current.getTimeInMillis() > another.getTimeInMillis();
+    }
+
+
+    private boolean isSelected(Calendar selectedDate) {
+        Calendar today = Calendar.getInstance(Locale.getDefault());
+        return isBefore(today, selectedDate);
     }
 
     private boolean isMonday(int position) {
