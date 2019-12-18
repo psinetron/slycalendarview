@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements SlyCalendarDialog
                 new SlyCalendarDialog()
                         .setSingle(false)
                         .setFirstMonday(false)
+                        .setStartDate(new Date())
+                        .setTimeEnabled(false)
                         .setCallback(MainActivity.this)
                         .show(getSupportFragmentManager(), "TAG_SLYCALENDAR");
             }
