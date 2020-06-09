@@ -6,56 +6,63 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/slycalendar_defBackgroundColor"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/slycalendar_defHeaderColor"
-        android:orientation="vertical"
-        android:paddingLeft="27dp"
-        android:paddingTop="21dp"
-        android:paddingRight="27dp"
-        android:paddingBottom="15dp">
+        android:paddingLeft="25dp"
+        android:paddingTop="25dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="10dp">
 
         <TextView
             android:id="@+id/txtYear"
-            android:layout_width="wrap_content"
-            android:layout_height="22dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:alpha="0.5"
             android:fontFamily="sans-serif-medium"
             android:textColor="@color/slycalendar_defHeaderTextColor"
             android:textSize="14sp"
-            android:layout_marginBottom="10dp"
-            tools:text="2018"
-            />
+            app:layout_constraintBottom_toTopOf="@+id/txtSelectedPeriod"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txtSelectedPeriod"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2018" />
 
         <TextView
             android:id="@+id/txtSelectedPeriod"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:singleLine="true"
             android:textColor="@color/slycalendar_defHeaderTextColor"
             android:textSize="22sp"
-            android:layout_marginBottom="10dp"
-            tools:text="FRI, 13 — SUN, 15 MAY"
-            android:singleLine="true"
-            android:maxLines="1"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtYear"
+            tools:text="FRI, 13 — SUN, 15 MAY" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="12dp"
-            />
+            android:layout_margin="10dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -68,7 +75,6 @@
                 android:layout_height="48dp"
                 android:layout_weight="0"
                 android:contentDescription="@string/slycalendar_prev"
-                android:foreground="?android:attr/actionBarItemBackground"
                 android:padding="12dp"
                 app:srcCompat="@drawable/slycalendar_chevron_left"
                 tools:ignore="VectorDrawableCompat" />
@@ -77,8 +83,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/btnMonthNext"
@@ -86,7 +91,6 @@
                 android:layout_height="48dp"
                 android:layout_weight="0"
                 android:contentDescription="@string/slycalendar_next"
-                android:foreground="?android:attr/actionBarItemBackground"
                 android:padding="12dp"
                 app:srcCompat="@drawable/slycalendar_chevron_right"
                 tools:ignore="VectorDrawableCompat" />
@@ -94,70 +98,61 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="horizontal"
             android:layout_gravity="end|bottom"
-
-            >
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/txtTime"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="0dp"
                 android:fontFamily="sans-serif-medium"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:paddingLeft="18dp"
                 android:paddingRight="18dp"
                 android:textAllCaps="true"
                 android:textColor="@color/slycalendar_defHeaderColor"
-                />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
+                app:layout_constraintBottom_toBottomOf="@+id/txtCancel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtCancel" />
 
 
             <TextView
                 android:id="@+id/txtCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:text="@string/slycalendar_cancel"
-                android:textAllCaps="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/slycalendar_cancel"
+                android:textAllCaps="true"
                 android:textColor="@color/slycalendar_defTextColor"
-                android:fontFamily="sans-serif-medium"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtSave"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtSave"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:text="@string/slycalendar_save"
-                android:textAllCaps="true"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/slycalendar_save"
+                android:textAllCaps="true"
                 android:textColor="@color/slycalendar_defTextColor"
-                android:fontFamily="sans-serif-medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
-                />
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
-
-
-
-
 
 </LinearLayout>

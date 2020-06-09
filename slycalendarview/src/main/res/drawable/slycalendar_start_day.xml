@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/dateShapeItem" >
-        <shape >
+        <shape
+            android:innerRadiusRatio="700"
+            android:thickness="20dp"
+            android:useLevel="false" >
             <solid android:color="@color/slycalendar_defSelectedColor"/>
-            <corners android:bottomLeftRadius="21dp" android:topLeftRadius="21dp"/>
+            <corners android:bottomLeftRadius="400dp" android:topLeftRadius="400dp"/>
         </shape>
     </item>
 </layer-list>
